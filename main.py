@@ -39,6 +39,9 @@ output_directory = 'outputs'
 os.makedirs(output_directory, exist_ok=True)
 for i in range(10):
     response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload)
+    print(response.status_code)
+    print(response.text)
+    print(response.content)
     r = response.json()
 
     image = Image.open(io.BytesIO(base64.b64decode(r['images'][0])))
