@@ -26,6 +26,7 @@ def upload_folder_to_s3(local_folder):
 
 
 url = "http://localhost:7861"
+headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
 payload = {
     "prompt": "jcsla style, light solid background color, realistic, solo photo, full or half body shot, looking at the camera, sharp focus, highly detailed <lora:ssaemi:1>",
     "negative_prompt": "(worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch, various background colors, extra legs, missing legs, accessories, clothes), open mouth, divide photo, grid photo",
@@ -38,7 +39,7 @@ payload = {
 output_directory = 'outputs'
 os.makedirs(output_directory, exist_ok=True)
 for i in range(1):
-    response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload)
+    response = requests.post(url=f'{url}/sdapi/v1/txt2img', headers=headers, json=payload)
     print(response.status_code)
     print(response.text)
     print(response.content)
