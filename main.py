@@ -25,7 +25,7 @@ def upload_folder_to_s3(local_folder):
             s3.upload_file(local_file_path, bucket_name, s3_file_key)
 
 
-url = "http://host.docker.internal:7861"
+url = "http://localhost:7861"
 payload = {
     "prompt": "jcsla style, light solid background color, realistic, solo photo, full or half body shot, looking at the camera, sharp focus, highly detailed <lora:ssaemi:1>",
     "negative_prompt": "(worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch, various background colors, extra legs, missing legs, accessories, clothes), open mouth, divide photo, grid photo",
