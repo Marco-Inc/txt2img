@@ -14,11 +14,17 @@ def upload_folder_to_s3(local_folder):
     path = "data/" + USER_ID + "/" + ALBUM_ID + '/outputs'
 
     s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-    for root, dirs, files in os.walk(local_folder):
-        for file in files:
-            local_file_path = os.path.join(root, file)
-            s3_file_key = os.path.join(path, file)
-            s3.upload_file(local_file_path, bucket_name, s3_file_key)
+    while True:
+        root, dirs, files = os.walk(local_folder)
+        if not dirs:
+            for file in files:
+                local_file_path = os.path.join(root, file)
+                s3_file_key = os.path.join(path, file)
+                s3.upload_file(local_file_path, bucket_name, s3_file_key)
+            break
+        else:
+            local_folder = os.path.join(local_folder, dirs[0])
+            continue
 
 
 url = "http://localhost:7861"
