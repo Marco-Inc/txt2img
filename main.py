@@ -1,31 +1,10 @@
 import requests
-import boto3
-import os
 import sys
 
 AWS_ACCESS_KEY_ID = sys.argv[1]
 AWS_SECRET_ACCESS_KEY = sys.argv[2]
 USER_ID = sys.argv[3]
 ALBUM_ID = sys.argv[4]
-
-
-def upload_folder_to_s3(local_folder):
-    bucket_name = 'cai-data-bucket'
-    path = "data/" + USER_ID + "/" + ALBUM_ID + '/outputs'
-
-    s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-    while True:
-        root, dirs, files = os.walk(local_folder)
-        if not dirs:
-            for file in files:
-                local_file_path = os.path.join(root, file)
-                s3_file_key = os.path.join(path, file)
-                s3.upload_file(local_file_path, bucket_name, s3_file_key)
-            break
-        else:
-            local_folder = os.path.join(local_folder, dirs[0])
-            continue
-
 
 url = "http://localhost:7861"
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
@@ -45,5 +24,3 @@ payload = {
 
 for i in range(1):
     response = requests.post(url=f'{url}/sdapi/v1/txt2img', headers=headers, json=payload)
-
-upload_folder_to_s3('../outputs/')
