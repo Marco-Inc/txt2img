@@ -11,7 +11,7 @@ ALBUM_ID = sys.argv[4]
 
 def upload_folder_to_s3(local_folder):
     bucket_name = 'cai-data-bucket'
-    path = USER_ID + "/" + ALBUM_ID + '/outputs'
+    path = "data/" + USER_ID + "/" + ALBUM_ID + '/outputs'
 
     s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
     for root, dirs, files in os.walk(local_folder):
