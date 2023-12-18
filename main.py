@@ -22,5 +22,5 @@ payload = {
     "save_images": True
 }
 
-for i in range(1):
+for i in range(10):
     response = requests.post(url=f'{url}/sdapi/v1/txt2img', headers=headers, json=payload)
