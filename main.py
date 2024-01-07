@@ -1,6 +1,9 @@
+import os
 import sys
 import random
+import json
 import requests
+import boto3
 import torch
 import gc
 
@@ -99,3 +102,25 @@ payload = {
 for prompt in selected_prompts:
     payload["prompt"] = prompt
     response = requests.post(url=f'{url}/sdapi/v1/txt2img', headers=headers, json=payload)
+
+s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY, region_name='ap-northeast-2')
+bucket_name = 'cai-data-bucket'
+region_name = 'ap-northeast-2'
+local_directory_path = "/workspace/stable-diffusion-webui/outputs/txt2img-images"
+uploaded_urls = []
+for root, dirs, files in os.walk(local_directory_path):
+    for file in files:
+        local_file_path = os.path.join(root, file)
+        s3_key = f'data/${USER_ID}/${ALBUM_ID}/outputs'
+        s3.upload_file(local_file_path, bucket_name, s3_key)
+        uploaded_url = f'https://{bucket_name}.s3.{region_name}.amazonaws.com/{s3_key}'
+        uploaded_urls.append(uploaded_url)
+
+api_url = "https://cai-api.marco-corp.com:8443/v1/finish"
+images = json.dumps(uploaded_urls)
+data = {
+    "userId": USER_ID,
+    "albumId": ALBUM_ID,
+    "images": images
+}
+response = requests.post(api_url, json=data)
