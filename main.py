@@ -111,7 +111,7 @@ uploaded_urls = []
 for root, dirs, files in os.walk(local_directory_path):
     for file in files:
         local_file_path = os.path.join(root, file)
-        s3_key = f'data/${USER_ID}/${ALBUM_ID}/outputs'
+        s3_key = f'data/{USER_ID}/{ALBUM_ID}/outputs/' + file
         s3.upload_file(local_file_path, bucket_name, s3_key)
         uploaded_url = f'https://{bucket_name}.s3.{region_name}.amazonaws.com/{s3_key}'
         uploaded_urls.append(uploaded_url)
