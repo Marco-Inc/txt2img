@@ -1,7 +1,6 @@
 import os
 import sys
 import random
-import json
 import requests
 import boto3
 import torch
@@ -117,7 +116,7 @@ for root, dirs, files in os.walk(local_directory_path):
         uploaded_urls.append(uploaded_url)
 
 api_url = "https://cai-api.marco-corp.com:8443/v1/finish"
-images = json.dumps(uploaded_urls)
+images = uploaded_urls
 data = {
     "userId": USER_ID,
     "albumId": ALBUM_ID,
