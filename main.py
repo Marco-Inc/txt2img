@@ -24,11 +24,11 @@ headers = {
 photos = 30
 if PRODUCT_ID in ["com.marcocorp.cai.standard", "com.marcocorp.cai.express"]:
     if IS_FIRST_ALBUM.lower() == 'true':
-        photos += 10
+        photos += 20
 elif PRODUCT_ID in ["com.marcocorp.cai.standardplus", "com.marcocorp.cai.expressplus"]:
-    photos += 20
+    photos += 30
     if IS_FIRST_ALBUM.lower() == 'true':
-        photos += 10
+        photos += 20
 
 prompts = [
     "(jcsla style:1.5), (ONLY ONE light solid background color:1.5, Floor color is same as background one, clear background, not blurry dog), realistic, solo photo, full or half body shot, looking at the camera, highly detailed, dslr photo, 8K <lora:ssaemi:1>",
